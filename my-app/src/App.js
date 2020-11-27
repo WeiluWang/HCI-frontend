@@ -1,25 +1,64 @@
-import logo from './logo.svg';
+import React, {useEffect} from 'react';
+import { observer } from 'mobx-react';
+import UserStore from './user/UserStore';
+import LoginForm from './login/loginForm';
+import RegisterForm from './register/register';
+import {Route, Switch, Link, BrowserRouter as Router} from "react-router-dom";
 import './App.css';
+import MainPage from './mainpage/mainpage';
+import { runInAction } from 'mobx';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+ 
+
+  const checkSecssion = () => {
+    UserStore.getDataFromSessionStorage();
+    console.log("render App");
+  }
+
+
+  useEffect(() => {checkSecssion()}, []);
+
+  if (UserStore.loading) {
+    return (
+      <div className="app">
+        
+          Loading, please wait...
+      
+      </div>
+    );
+  } else {
+
+    return (
+       <div className="app">
+          <Router>
+            <div className='account'>
+            {UserStore.isLoggedIn===false && 
+              <div className='navLink'>
+                <Link className='navLinkBtn' to="/login">Login</Link>
+                <Link className='navLinkBtn' to="/register">Register</Link>
+              </div>}
+            <Switch>
+              <Route exact path = "/login">
+                <LoginForm />
+              </Route>
+              <Route exact path = "/register">
+                <RegisterForm />
+              </Route>
+              <Route path = "/mainpage">
+                <MainPage />
+              </Route>
+            </Switch>
+            </div>
+          </Router>
+
+        
+        
+      </div>
+    );
+  }
+
 }
 
-export default App;
+export default observer(App);
