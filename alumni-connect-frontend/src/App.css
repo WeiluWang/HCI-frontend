@@ -1,0 +1,21 @@
+.navLinkBtnLogin{
+  
+  font-size: x-large;
+  font-weight: bolder;
+  margin-left:2px;
+  margin-right: 2px;
+  width:185px;
+}
+.navLinkBtnRegister{
+  font-size: x-large;
+  font-weight: bolder;
+  width:185px;
+}
+
+.hide{
+  display: none;
+}
+
+.account{
+  height: 550px;
+}

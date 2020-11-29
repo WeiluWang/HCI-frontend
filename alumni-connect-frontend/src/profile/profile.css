@@ -1,0 +1,12 @@
+.profileInput{
+    margin-bottom: 20px;
+}
+.input {
+    margin-left:0px;
+    outline: 0;
+    border-width: 0 0 2px;
+  
+}
+.profile{
+    text-align: center;
+}
