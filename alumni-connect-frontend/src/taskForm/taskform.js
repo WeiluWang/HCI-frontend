@@ -4,7 +4,7 @@ import UserStore from '../stores/UserStore';
 import {useHistory} from "react-router-dom";
 import axios from 'axios';
 import {Route, Switch, Link, BrowserRouter as Router} from "react-router-dom";
-import {Button, Row, Col} from 'react-bootstrap';
+import {Button, Row, Col, ProgressBar} from 'react-bootstrap';
 import { useState } from "react";
 import "./taskform.css";
 
@@ -73,6 +73,7 @@ function TaskForm() {
                             />
                         </div>
                     </div>
+                    <ProgressBar animated now={45} />
         </div>
     );
 
