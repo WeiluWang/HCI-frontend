@@ -53,7 +53,7 @@ function MainPage() {
                 <Profile />
               </Route>
               <Route exact path = "/mainpage">
-                {UserStore.role=="p"?<TaskForm/>:<PostList />}
+                {UserStore.role=="d"?<TaskForm/>:<PostList />}
               </Route>
               <Route path = "/mainpage/record">
                 <RecordList />
