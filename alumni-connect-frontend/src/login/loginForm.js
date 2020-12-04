@@ -21,7 +21,8 @@ function LoginForm() {
         setButtonDisabled(false);
     }
     
-    const doLogin = async () => {
+    const doLogin =  async() => {
+       
         if (!username) {
             return;
         }
@@ -32,18 +33,18 @@ function LoginForm() {
         setButtonDisabled(true);
 
         try {
-            const apiUrl = 'http://nyu-devops-alumniconnect.herokuapp.com/api/auth/login';
-            const pwd = CryptoJs.MD5(password).toString();
+            const apiUrl = 'http://cs6543.herokuapp.com:80/logIn';
+            
             let res = await axios.post(apiUrl, {
                 "username": username,
-                "passwd": pwd,
+                "password": password,
             });
             //console.log(res)
             runInAction(() => {
                 if (res.status === 200) {
                     UserStore.isLoggedIn = true;
                     UserStore.username = username;
-                    UserStore.id = res.data.user_id;
+
                     UserStore.setDataFromSessionStorage();
                     setUsername('success');
                     // console.log(username);

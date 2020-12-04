@@ -14,6 +14,7 @@ import TaskForm from '../taskForm/taskform'
 
 
 function MainPage() {
+  console.log(UserStore.isLoggedIn)
     let history = useHistory();
     const doLogout = async() => {
 

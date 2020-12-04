@@ -18,10 +18,6 @@ function App() {
     console.log("render App");
   }
 
-  const handleMainPage = () =>{
-    
-    UserStore.isLoggedIn = true;
-  }
 
   useEffect(() => {checkSecssion()}, []);
 
@@ -52,15 +48,11 @@ function App() {
               </Route>
             </Switch>
             </div>
+          
             {UserStore.isLoggedIn===false && 
-              <div className='navLink'>
-                
-                  
-                  <Link  to="/" className={show?"hide":""} ><Button className='navLinkBtnLogin' variant="outline-primary">Login</Button></Link>
-                 
-                
-                
-                  <Link  to="/register" className={show?"hide":""}><Button className='navLinkBtnRegister' variant="outline-primary">
+              <div className='navLink'>                  
+                  <Link  to="/"  ><Button className='navLinkBtnLogin' variant="outline-primary">Login</Button></Link>
+                  <Link  to="/register" ><Button className='navLinkBtnRegister' variant="outline-primary">
                     Register
                   </Button></Link>
                 
