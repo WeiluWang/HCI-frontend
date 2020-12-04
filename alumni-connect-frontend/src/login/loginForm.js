@@ -44,7 +44,13 @@ function LoginForm() {
                 if (res.status === 200) {
                     UserStore.isLoggedIn = true;
                     UserStore.username = username;
-
+                    UserStore.age = res.data.age;
+                    UserStore.location = res.data.location;
+                    UserStore.gender = res.data.gender;
+                    UserStore.phone = res.data.phone;
+                    UserStore.id = res.data.uid;
+                    UserStore.email = res.data.email;
+                    UserStore.role = res.data.role;
                     UserStore.setDataFromSessionStorage();
                     setUsername('success');
                     // console.log(username);
