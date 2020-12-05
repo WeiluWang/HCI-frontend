@@ -70,6 +70,20 @@ function TaskForm() {
         })
       }
 
+      const handleFinishTask = () =>{
+        axios.put('http://cs6543.herokuapp.com:80/posts/post/'+curpid,
+            {
+                "status":3
+            }
+        )
+        .then(function(response){
+            setCurTask(false)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+      }
+
     const [curTask, setCurTask] = useState(false)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -141,7 +155,7 @@ function TaskForm() {
         <div className='profile'>
             {curTask? 
             <div>
-                {status==2 ?
+                {status!=0 ?
                 <div>
                     <div className="tasktitle">Delivering...</div>
                     <div className="curTask">
@@ -153,7 +167,8 @@ function TaskForm() {
                         <div>Phone Number:</div>
                         <div className="info"> {deliverPhone}</div>
                     </div>
-                    
+                    {status==2 &&
+                    <Button variant="outline-primary" onClick={handleFinishTask}>Confirm Task</Button>}
                 </div>:
                 <div>
                     <div className="tasktitle">Waiting for Deliver...</div>

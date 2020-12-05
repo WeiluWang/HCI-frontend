@@ -22,12 +22,17 @@
     width: 100%;
 }
 
+.postCard:hover{
+    background-color: lightgrey;
+}
+
 .search_bar{
     width: 60%;
     margin-bottom: 20px;
 }
 
 .post-list-title{
+    
     font-size: x-large;
     font-weight: bolder;
     
@@ -66,7 +71,7 @@
 .tags{
     margin-left: 3px;
     display: inline;
-    color: lightblue
+    color: lightgrey
 }
 .deleteBtn{
     text-align: right;
@@ -74,4 +79,38 @@
 
 .taskList{
     
+}
+.pay{
+    margin-left: 50px;
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+.detailTilte {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.detailInfo {
+    font-size: large;
+}
+
+.recieveBtn{
+    margin-left: 250px;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.deliveringtitle{
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+.confirmBtn{
+    margin-top: 50px;
+    margin-left: 160px;
+    font-size: x-large;
+    font-weight: bolder;
 }
