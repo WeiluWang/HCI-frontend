@@ -5,7 +5,7 @@ import UserStore from '../stores/UserStore';
 import axios from 'axios';
 import { useState } from "react";
 import './register.css'
-import {Button} from 'react-bootstrap'
+import {Button, Row, Col} from 'react-bootstrap'
 import {useHistory} from "react-router-dom";
 import CryptoJs from 'crypto-js';
 
@@ -15,6 +15,14 @@ function RegisterForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [age, setAge] = useState(0);
+    const [gender, setGender] = useState(0);
+    const [phone, setPhone] = useState('');
+    const [role, setRole] = useState(0);
+    const [location, setLocation] = useState('');
+    const [genderBtn, setGenderBtn] = useState(0);
+    const [roleBtn, setRoleBtn] = useState(0);
+
     const [buttonDisabled, setButtonDisabled] = useState(false);
     let history = useHistory();
 
@@ -24,6 +32,25 @@ function RegisterForm() {
         setEmail('');
         setButtonDisabled(false);
     }
+
+    const handleGenderMaleBtn = () => {
+        setGender(1)
+        setGenderBtn(1)
+    }
+    const handleGenderFemaleBtn = () => {
+        setGender(2)
+        setGenderBtn(2)
+    }
+
+    const handlePosterBtn = () => {
+        setRole(1)
+        setRoleBtn(1)
+    }
+    const handleDeliverBtn = () => {
+        setGender(2)
+        setRoleBtn(2)
+    }
+
 
     const doRegister = async () => {
 
@@ -37,39 +64,35 @@ function RegisterForm() {
         setButtonDisabled(true);
 
         try {
-            const apiUrl = 'http://nyu-devops-alumniconnect.herokuapp.com/api/users/';
-            const pwd = CryptoJs.MD5(password).toString();
+            const apiUrl = 'http://cs6543.herokuapp.com:80/signUp';
+            
             let res = await axios.post(apiUrl, {
                 username: username,
-                passwd  : pwd,
+                passwd  : password,
                 email   : email,
+                location:location,
+                age:age,
+                gender:gender,
+                role:role,
+                balance:100,
+                phone:phone
             }).catch(error=>{
                 alert(error.response.data.message);
             });
             if (res.status === 200) {
-                UserStore.username = username;
+                console.log(res)
                 UserStore.isLoggedIn = true;
-                UserStore.token = 'Bearer '+res.data.access_token;
-                UserStore.id = res.data.user_id;
+                UserStore.username = username;
+                UserStore.age = res.data.age;
+                UserStore.location = res.data.location;
+                UserStore.gender = res.data.gender;
+                UserStore.phone = res.data.phone;
+                UserStore.id = res.data.uid;
+                UserStore.email = res.data.email;
+                UserStore.role = res.data.role;
                 UserStore.setDataFromSessionStorage();
                 console.log(UserStore)
-                axios.post('http://nyu-devops-alumniconnect.herokuapp.com/api/profiles/profile/user/'+UserStore.id, 
-                {
-                    user : username,
-                    age : 20,
-                    email : email
-                },
-                    {headers: { Authorization: UserStore.token }}
-                  )
-                  .then(function (response) {
-                    console.log(response);
-                    alert('register success!')
-                    history.push("/mainpage")
-                    setUsername('success');
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  })
+                history.push("/mainpage")
                 
             } else {
                 resetForm();
@@ -88,6 +111,8 @@ function RegisterForm() {
             <div className='title'>
                 Resigter
             </div>
+            <Row>
+                <Col xs={6}>
             <div className='inputTool'>
                 <label htmlFor="usernameInput">Username</label>
                 <div>
@@ -101,20 +126,20 @@ function RegisterForm() {
                 />
                 </div>
             </div>
-
-            <div  className='inputTool'>
-                <label htmlFor="passwordInput">Password</label>
+            <div className='inputTool'>
+                <label htmlFor="emailInput">Phone</label>
                 <div>
-                <input
+                <input 
                     className='input' 
-                    id="passwordInput" 
-                    type='password'
-                    plcaeholder='Password'
-                    value={password ? password : ''}
-                    onChange={(e) => setPassword(e.target.value)}
+                    id="emailInput" 
+                    type='text'
+                    plcaeholder='Email'
+                    value={phone ? phone: ''}
+                    onChange={(e) => setPhone(e.target.value)}
                 />
                 </div>
             </div>
+
 
             <div className='inputTool'>
                 <label htmlFor="emailInput">Email</label>
@@ -129,6 +154,68 @@ function RegisterForm() {
                 />
                 </div>
             </div>
+            
+            </Col>
+            <Col xs={6}>
+            <div  className='inputTool'>
+                <label htmlFor="passwordInput">Password</label>
+                <div>
+                <input
+                    className='input' 
+                    id="passwordInput" 
+                    type='password'
+                    plcaeholder='Password'
+                    value={password ? password : ''}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                </div>
+            </div>
+            <div className='inputTool'>
+                <label htmlFor="emailInput">Location</label>
+                <div>
+                <input 
+                    className='input' 
+                    id="emailInput" 
+                    type='text'
+                    plcaeholder='Email'
+                    value={location ? location: ''}
+                    onChange={(e) => setLocation(e.target.value)}
+                />
+                </div>
+            </div>
+            <div className='inputTool'>
+                <label htmlFor="emailInput">Age</label>
+                <div>
+                <input 
+                    className='input' 
+                    id="emailInput" 
+                    type='text'
+                    plcaeholder='Age'
+                    value={age ? age: ''}
+                    onChange={(e) => setAge(e.target.value)}
+                />
+                </div>
+            </div>
+            
+            
+            
+            </Col>
+            </Row>
+            <div className='inputTool'>
+                <label htmlFor="emailInput">Role</label>
+                <div>
+                <Button variant={roleBtn==1?'primary':'outline-primary'} onClick={handlePosterBtn}> Poster</Button>
+                <Button variant={roleBtn==2?'primary':'outline-primary'} onClick={handleDeliverBtn}> Deliver</Button>
+                </div>
+            </div>
+            <div className='inputTool'>
+                <label htmlFor="emailInput">Gender</label>
+                <div>
+                <Button variant={genderBtn==1?'primary':'outline-primary'} onClick={handleGenderMaleBtn}> Male</Button>
+                <Button variant={genderBtn==2?'primary':'outline-primary'} onClick={handleGenderFemaleBtn}> Female</Button>
+                </div>
+            </div>
+           
             <div className='submitBtn'>
             <Button
                 variant='outline-success'
