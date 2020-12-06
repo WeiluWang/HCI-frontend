@@ -11,100 +11,19 @@ import "./record.css";
 import { lib } from 'crypto-js';
 
 function RecordList() {
-    const task = [
-        {
-            title:"water444",
-            description:"can someone buy water for me pls!!!",
-            location:"2404 Shady Dr, Colorado Spring, CO, 90821",
-
-        },
-        {
-            title:"water1",
-            description:"can someone buy water for me pls!!!",
-            location:"2404 Shady Dr, Colorado Spring, CO, 90821",
-
-        },
-        {
-            title:"water2",
-            description:"can someone buy water for me pls!!!",
-            location:"2404 Shady Dr, Colorado Spring, CO, 90821",
-
-        },
-        {
-            title:"water3",
-            description:"can someone buy water for me pls!!!",
-            location:"2404 Shady Dr, Colorado Spring, CO, 90821",
-
-        },
-        {
-            title:"water4",
-            description:"can someone buy water for me pls!!!",
-            location:"2404 Shady Dr, Colorado Spring, CO, 90821",
-
-        }
-
-    ]
-
-
-    
-    const [post, setPost] = useState('');
-    const [inputTopic, setInputTopic] = useState('');
-    const [inputContent, setInputContent] = useState('');
-    const [inputTag, setInputTag] = useState('');
-    const [tagArray,setTagArray] = useState([]);
-    const [posts, setPosts] = useState([]);
-    const [show, setShow] = useState(false);
-    const handleClose = ()=>{
-        setShow(false);
-    }
-    const handleNewPost = () => {
-        console.log(inputTag)
-        console.log(inputTopic)
-        axios.post('http://nyu-devops-alumniconnect.herokuapp.com/api/posts/user/'+UserStore.id, {
-            user: UserStore.id,
-            username: UserStore.username,
-            title: inputTopic,
-            content: inputContent,
-            tags: tagArray
-          },
-          {headers: { Authorization: UserStore.token}}
-          )
-          .then(function (response) {
-            console.log(response);
-            axios.get('http://nyu-devops-alumniconnect.herokuapp.com/api/posts',
-                )
-                .then(function (response) {
-                    //console.log(response);
-                    response.data = response.data.sort((a,b)=>{return a.createtime - b.createtime}).reverse();
-                    setPosts(response.data)
-                    //console.log(posts)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        setShow(false)
-    };
-    const handleShow = () => setShow(true);
-
-    const Search = () => {
-
-    }
-
+   
+    const [tasks, setTasks] = useState([])
     const getPost = () => {
         UserStore.getDataFromSessionStorage();
         
-        axios.get('http://nyu-devops-alumniconnect.herokuapp.com/api/posts',
+        axios.get('http://cs6543.herokuapp.com:80/posts/user/'+UserStore.id,
             
         )
         .then(function (response) {
             //console.log(response);
             response.data = response.data.sort((a,b)=>{return a.createtime - b.createtime}).reverse();
-            setPosts(response.data)
-            //console.log(posts)
+            setTasks(response.data)
+            console.log(tasks)
         })
         .catch(function (error) {
             console.log(error);
@@ -112,102 +31,52 @@ function RecordList() {
     }
     
     useEffect(() => {getPost()}, []);
-    const [postTitle, setPostTitle] = useState('');
-    const [postUid, setPostUid] = useState('');
-    const [postAuthor, setPostAuthor] = useState('');
-    const [postContent, setPostContent] = useState('');
-    const [postTime, setPostTime] = useState('');
-    const [postTags, setPostTags] = useState('');
-    const[postActive, setPostActive] = useState('');
-    const [postSearch, setPostSearch] = useState('');
-
-    const handleTag=(e)=>{
-        let res = e.target.value.split(" #")
-        setTagArray(res)
-    }
-
-    const handleSearch=(e)=>{
-        setPostSearch(e.target.value)
-    }
-
-    const deletePost=()=>{
-        axios.delete('http://nyu-devops-alumniconnect.herokuapp.com/api/posts/post/'+ postActive,
-            {headers: { Authorization: UserStore.token}}
-        )
-        .then(function (response) {
-            //console.log(response);
-            alert('post deleted')
-            setPostActive('')
-            axios.get('http://nyu-devops-alumniconnect.herokuapp.com/api/posts',
-                )
-                .then(function (response) {
-                    //console.log(response);
-                    response.data = response.data.sort((a,b)=>{return a.createtime - b.createtime}).reverse();
-                    setPosts(response.data)
-                    //console.log(posts)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-            //console.log(posts)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-    }
-
-    const handleAllPost=()=>{
-        axios.get('http://nyu-devops-alumniconnect.herokuapp.com/api/posts',
-        )
-        .then(function (response) {
-            //console.log(response);
-            response.data = response.data.sort((a,b)=>{return a.createtime - b.createtime}).reverse();
-            setPosts(response.data)
-            //console.log(posts)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-    }
-
-    const handleMyPost=()=>{
-        let mypost = posts.filter(p=>p.user == UserStore.id)
-        setPosts(mypost)
-    }
-
-    const handlePost=(e)=>{
-        setPost(e.target.id)
-        setPostActive(e.target.id)
-        axios.get('http://nyu-devops-alumniconnect.herokuapp.com/api/posts/post/'+e.target.id,
+    const[detail,setDetail] = useState('')
+    const showDetail = (e) => {
+        setDetail(e.target.id)
+        console.log(detail)
         
-        )
-        .then(function (response) {
-            console.log(response);
-            setPostTitle(response.data.title)
-            setPostAuthor(response.data.username)
-            setPostUid(response.data.user)
-            setPostContent(response.data.content)
-            setPostTime(response.data.createtime)
-            setPostTags(response.data.tags)
-            console.log(postTags)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
     }
 
     return (
         <div className="taskList">
             {
-                task.map(t=>
-                <div className='postCard'>
-                    <div className='post-list-title'>{t.title}</div>
-                    <div>
-                        {t.description}
+                tasks.map(t=>
+                <div className={t.status==3?'recordDoneCard':'recordDoingCard'} onClick={showDetail} id={t.pid}>
+                    <Row>
+                        <Col xs={6}>
+                    <div className='post-list-title' id={t.pid} onClick={showDetail}>{t.topic}</div>
+                    </Col>
+                    <Col xs={6}>
+                    <div className='pay' id={t.pid} onClick={showDetail}>${t.price}</div>
+                    </Col>
+                    </Row>
+                <div  id={t.pid} onClick={showDetail}>created on {t.dueTime.slice(0,10)}</div>
+                {t.pid == detail && 
+                <div id={t.pid}>
+                    <Row id={t.pid}>
+                        <Col xs={6} id={t.pid}>
+                            <div className='detailTilte' id={t.pid}>Task description</div>
+                            <div className='detailInfo' id={t.pid}>{t.description}</div>
+                        </Col>
+                        <Col xs={6} id={t.pid}>
+                            <div className='detailTilte' id={t.pid}>Location</div>
+                            <div className='detailInfo' id={t.pid}>{t.location}</div>
+                        </Col>
+                        
+                    </Row>
+                    
+                    <div className='feedback'>
+                        
+                        <textarea className='feedbackInput' placeholder='leave your feedback!'></textarea>
+                        <div>
+                            <Button variant='success'>Submit</Button>
+                        </div>
                     </div>
-                    <div>
-                        {t.location}
-                    </div> 
+                    
+                    
+                    
+                </div>}
                 </div>
                 
                 )

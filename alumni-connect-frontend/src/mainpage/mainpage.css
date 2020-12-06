@@ -14,3 +14,10 @@
     font-weight: bold;
     
 }
+
+.logoutBtn{
+    background-color: #343a40!important;
+    border-color: #343a40!important;
+    font-weight: bold;
+    margin-left: 200px;
+}

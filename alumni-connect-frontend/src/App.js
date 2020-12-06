@@ -49,7 +49,7 @@ function App() {
             </Switch>
             </div>
           
-            {UserStore.isLoggedIn===false && 
+            {UserStore.isLoggedIn==false && 
               <div className='navLink'>                  
                   <Link  to="/"  ><Button className='navLinkBtnLogin' variant="outline-primary">Login</Button></Link>
                   <Link  to="/register" ><Button className='navLinkBtnRegister' variant="outline-primary">

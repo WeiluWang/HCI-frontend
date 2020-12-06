@@ -30,7 +30,13 @@ function MainPage() {
         <div>
             <Navbar bg="dark" variant="dark">
               <Navbar.Brand href="/">UHelp</Navbar.Brand>
-             
+              <div className="logout">
+                <Button 
+                  className='logoutBtn'
+                  disabled={false}
+                  onClick={() => doLogout()}
+                >Logout</Button>
+              </div>
             </Navbar>
             <Router>
         

@@ -75,3 +75,33 @@
 .taskList{
     
 }
+
+.recordDoneCard{
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    padding: 1.25rem;
+    width: 100%;
+}
+
+.recordDoneCard:hover{
+    background-color:rgb(222, 253, 222)
+}
+
+.recordDoingCard{
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    padding: 1.25rem;
+    width: 100%;
+}
+.recordDoingCard:hover{
+    background-color: rgb(206, 224, 248);
+}
+.feedback{
+    margin-top: 30px;
+    text-align: center;
+    
+}
+.feedbackInput{
+    width: 250px;
+    height:150px;
+}

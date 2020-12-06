@@ -11,6 +11,8 @@ import "./profile.css";
 function Profile() {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [age, setAge] = useState(0);
+    const [phone, setPhone] = useState('');
+    const [location, setLocation] = useState('')
     const [user, setUser] = useState(UserStore.username);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
@@ -22,16 +24,16 @@ function Profile() {
             return;
         }
         console.log("UserStore.id : " + UserStore.id);
-        axios.put('http://nyu-devops-alumniconnect.herokuapp.com/api/profiles/profile/user/'+UserStore.id,
+        axios.put('http://cs6543.herokuapp.com:80/users/user/'+UserStore.id,
             {
-                "user": UserStore.username,
-                "firstname": firstname? firstname: '',
-                "lastname": lastname? lastname: '',
+                "username": UserStore.username,
+                
                 "age": age? age:0,
                 "email" : email,
-                "discipline": discipline?discipline: ''
+                "phone":phone? phone: UserStore.phone,
+                "location": location?location: UserStore.location
             },
-            {headers: { Authorization: UserStore.token }}
+            
         ).then(function(response2) {
             console.log(response2);
             alert('update profile success!');
@@ -41,87 +43,93 @@ function Profile() {
         setButtonDisabled(true);
     }
     
-    const getProfile = () => {
-        UserStore.getDataFromSessionStorage();
-        console.log("Id : " + UserStore.id);
-        console.log("Token : " + UserStore.token);
-        axios.get('http://nyu-devops-alumniconnect.herokuapp.com/api/profiles/profile/user/'+UserStore.id,
-            {headers: { Authorization: UserStore.token }}
-        )
-        .then(function (response) {
-            console.log(response);
-            setAge(response.data.age);
-            setEmail(response.data.email)
-            setUser(response.data.user);
-            setFirstname(response.data.firstname);
-            setLastname(response.data.lastname);
-            setDiscipline(response.data.discipline);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-    }
     
-    useEffect(() => {getProfile()}, []);
+
     return (
         <div className='profile'>
              
-                    <div className='profileInput'>
-                        <label className='profileTitle' htmlFor="usernameInput">Username</label>
+                    <div className='hi'>
+                        Welcome to UHelp {UserStore.username} !
+                    </div>
+                    <Row>
+                        <Col xs={6}>
+                            <div className='profileInput'>
+                                <label className='profileTitle' htmlFor="firstnameInput">Email</label>
+                                <div>
+                                    <input 
+                                        className="input"
+                                        id="FirstNameInput" 
+                                        type='text'
+                                        value={UserStore.email}
+                                        
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className='profileInput'>
+                        <label className='profileTitle' htmlFor="emailInput">Role</label>
                         <div>
-                            <input 
-                                className="input"
-                                id="usernameInput" 
-                                type='text'
-                                value={UserStore.username}
-                                disabled
-                            />
+                            {UserStore.gender == 1 ? <div>Poster</div>:<div>Deliver</div>}
                         </div>
                     </div>
-                    <div className='profileInput'>
-                        <label className='profileTitle' htmlFor="firstnameInput">FirstName</label>
-                        <div>
-                            <input 
-                                className="input"
-                                id="FirstNameInput" 
-                                type='text'
-                                value={firstname}
-                                disabled={buttonDisabled}
-                                onChange={(e) => setFirstname(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div className='profileInput'>
+                    
+                        </Col>
+                        <Col xs={6}>
+                        <div className='profileInput'>
                         <label className='profileTitle' htmlFor="ageInput">Age</label>
                         <div>
                             <input 
                                 className="input"
                                 id="ageInput" 
                                 type='text'
-                                value={age}
-                                onChange={(e) => {
-                                    const newAge = e.target.value.replace(/[^\d]+/, '');
-                                    setAge(Number(newAge));
-                                }}
-                                keyboardtype='numeric'
-                                disabled={buttonDisabled}
+                                value={UserStore.age}
+                                onChange={(e) => setAge(e.target.value)}
+                                
                             />
                         </div>
                     </div>
-                
                     <div className='profileInput'>
-                        <label className='profileTitle' htmlFor="emailInput">Email</label>
+                        <label className='profileTitle' htmlFor="emailInput">Gender</label>
+                        <div>
+                            {UserStore.gender == 1 ? <div>Male</div>:<div>Female</div>}
+                        </div>
+                    </div>
+                        </Col>
+                    </Row>
+                    
+                    
+                    <div className='profileInput'>
+                        <label className='profileTitle' htmlFor="emailInput">Phone</label>
                         <div>
                             <input 
                                 className="input"
                                 id="emailInput" 
                                 type='text'
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                disabled={buttonDisabled}
+                                value={UserStore.phone}
+                                onChange={(e) => setPhone(e.target.value)}
                             />
                         </div>
                     </div>
+                    
+                    <div className='profileInput'>
+                        <label className='profileTitle' htmlFor="emailInput">Location</label>
+                        <div>
+                            <input 
+                                className="input"
+                                id="emailInput" 
+                                type='text'
+                                value={UserStore.location}
+                                onChange={(e) => setLocation(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    
+                    <div className='balance'>
+                            <div>
+                                Balance: 146(USD)
+                            </div>
+                    </div>
+                    
 
            
             <Row>

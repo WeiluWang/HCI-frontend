@@ -42,7 +42,19 @@ function TaskForm() {
           const timerID = setInterval(() => tick(), 1000);
           return () => clearInterval(timerID);
         });
-        
+        const handleCancel = () =>{
+            axios.put('http://cs6543.herokuapp.com:80/posts/post/'+curpid,
+                {
+                    "status":4
+                }
+            )
+            .then(function(response){
+                setCurTask(false)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+          }
         return (
           <div>
             <p>{`${h.toString().padStart(2, '0')}:${m
@@ -56,23 +68,12 @@ function TaskForm() {
       };
 
     
-      const handleCancel = () =>{
-        axios.put('http://cs6543.herokuapp.com:80/posts/post/'+curpid,
-            {
-                "status":4
-            }
-        )
-        .then(function(response){
-            setCurTask(false)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-      }
+      
 
       const handleFinishTask = () =>{
         axios.put('http://cs6543.herokuapp.com:80/posts/post/'+curpid,
             {
+                "deliver":deliver,
                 "status":3
             }
         )

@@ -63,6 +63,7 @@ function PostList() {
     const recieveButton = () =>{
         axios.put('http://cs6543.herokuapp.com:80/posts/post/'+detail,
         {
+            "deliver":UserStore.id,
             "status":1
         }
         )
@@ -78,6 +79,7 @@ function PostList() {
     const DoneButton = () =>{
         axios.put('http://cs6543.herokuapp.com:80/posts/post/'+detail,
         {
+            "deliver":UserStore.id,
             "status":2
         }
         )

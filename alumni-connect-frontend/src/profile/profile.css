@@ -1,5 +1,5 @@
 .profileInput{
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 .input {
     margin-left:0px;
@@ -9,4 +9,19 @@
 }
 .profile{
     text-align: center;
+}
+.profileTitle{
+    font-size: large;
+    font-weight: bolder;
+}
+.hi{
+    font-size: x-large;
+    font-weight: bolder;
+    margin-bottom: 40px;
+}
+.balance{
+    margin-left: 100px;
+    font-size: x-large;
+    font-weight: bolder;
+    margin-bottom: 30px;
 }

@@ -6,7 +6,6 @@ import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 class UserStore {
     constructor() {
         extendObservable(this, {
-
             loading: false,
             isLoggedIn: false,
             username: '',
@@ -96,9 +95,9 @@ class UserStore {
         sessionStorage.setItem("age",JSON.stringify(this.age));
         sessionStorage.setItem("email",JSON.stringify(this.email));
         sessionStorage.setItem("role",JSON.stringify(this.role));
-        sessionStorage.setItem("role",JSON.stringify(this.role));
-        sessionStorage.setItem("role",JSON.stringify(this.role));
-        sessionStorage.setItem("role",JSON.stringify(this.role));
+        sessionStorage.setItem("location",JSON.stringify(this.location));
+        sessionStorage.setItem("gender",JSON.stringify(this.gender));
+        sessionStorage.setItem("phone",JSON.stringify(this.phone));
         sessionStorage.setItem("id",JSON.stringify(this.id));
     };
 }

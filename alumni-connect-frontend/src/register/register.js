@@ -68,7 +68,7 @@ function RegisterForm() {
             
             let res = await axios.post(apiUrl, {
                 username: username,
-                passwd  : password,
+                password  : password,
                 email   : email,
                 location:location,
                 age:age,
