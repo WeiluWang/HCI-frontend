@@ -50,16 +50,43 @@ function PostList() {
             //console.log(response);
             response.data = response.data.sort((a,b)=>{return a.createtime - b.createtime}).reverse();
             setTasks(response.data)
-            console.log(tasks)
+            //console.log(tasks)
         })
         .catch(function (error) {
             console.log(error);
         })
     }
-    
+
+    const getCurTask = () => {
+        UserStore.getDataFromSessionStorage();
+        
+        axios.get('http://cs6543.herokuapp.com:80/posts/user/'+UserStore.id,
+            
+        )
+        .then(function (response) {
+            //console.log(response);
+            response.data = response.data.sort((a,b)=>{return a.createtime - b.createtime}).reverse();
+            let res = response.data.filter(t=>t.status!=3 &&t.status!= 4)
+            if(res.length >0){
+                setNewTask(true)
+                setDetail(res[0].pid)
+                setlocation(res[0].location)
+                setDescription(res[0].description)
+                setPostername(res[0].postName)
+                setPosterphone(res[0].postPhone)
+            }
+            console.log(res[0])
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+    useEffect(() => {getCurTask()}, []);
     useEffect(() => {getPost()}, []);
     const [newTask, setNewTask] = useState(false)
-    
+    const [location, setlocation] = useState('')
+    const [description, setDescription] = useState('')
+
     const recieveButton = () =>{
         axios.put('http://cs6543.herokuapp.com:80/posts/post/'+detail,
         {
@@ -70,6 +97,14 @@ function PostList() {
         .then(function (response) {
             console.log(response);
             setNewTask(true)
+            axios.get('http://cs6543.herokuapp.com:80/posts/post/'+detail)
+            .then(function(response){
+                setlocation(response.data.location)
+                setDescription(response.data.description)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
         })
         .catch(function (error) {
             console.log(error);
@@ -79,6 +114,7 @@ function PostList() {
     const DoneButton = () =>{
         axios.put('http://cs6543.herokuapp.com:80/posts/post/'+detail,
         {
+            
             "deliver":UserStore.id,
             "status":2
         }
@@ -108,6 +144,15 @@ function PostList() {
             <div>
             <div className="deliveringtitle">Finishing Your Task...</div>
             <div className="curTask"> 
+            </div>
+            <div className='information'>
+                <div className='informationTitle'>Task Description</div>
+                <div>{description}</div>
+                <div className='informationTitle'>Location</div>
+                <div>{location}</div>
+                <div className='informationTitle'>Contact</div>
+                <div>{postername}</div>
+                <div>{posterphone}</div>
             </div>
             <Button variant="outline-success" className="confirmBtn" onClick={DoneButton}>Done</Button>
             </div>

@@ -65,14 +65,16 @@ function RecordList() {
                         </Col>
                         
                     </Row>
-                    
+                    {UserStore.role == 1 &&
                     <div className='feedback'>
                         
-                        <textarea className='feedbackInput' placeholder='leave your feedback!'></textarea>
-                        <div>
-                            <Button variant='success'>Submit</Button>
-                        </div>
+                    <textarea className='feedbackInput' placeholder='leave your feedback!'></textarea>
+                    <div>
+                        <Button variant='success'>Submit</Button>
                     </div>
+                </div>
+                    }
+                    
                     
                     
                     

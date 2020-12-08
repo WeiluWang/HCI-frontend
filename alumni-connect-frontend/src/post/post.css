@@ -114,3 +114,12 @@
     font-size: x-large;
     font-weight: bolder;
 }
+.information{
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.informationTitle{
+    font-weight: bolder;
+    font-size: large;
+    margin-bottom: 5px;
+}

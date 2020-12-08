@@ -47,7 +47,7 @@ function RegisterForm() {
         setRoleBtn(1)
     }
     const handleDeliverBtn = () => {
-        setGender(2)
+        setRole(2)
         setRoleBtn(2)
     }
 
